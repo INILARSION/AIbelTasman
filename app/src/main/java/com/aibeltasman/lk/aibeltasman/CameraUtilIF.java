@@ -1,6 +1,9 @@
 package com.aibeltasman.lk.aibeltasman;
 
 import android.graphics.Bitmap;
+import android.hardware.Camera;
+
+import java.util.List;
 
 interface CameraUtilIF {
 
@@ -9,6 +12,12 @@ interface CameraUtilIF {
     void startFlashlight();
 
     void stopFlashlight();
+
+    List<int[]> getPreviewFpsRange();
+
+    List<Integer> getSupportedPreviewFormats();
+
+    List<Camera.Size> getSupportedPreviewSizes();
 
     Bitmap getPreviewBitmap();
 
