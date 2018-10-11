@@ -11,6 +11,11 @@ import java.io.OutputStream;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * This class is responsible for connecting to another (paired) Bluetooth device
+ * and for sending and receiving byte-streams.
+ */
+
 public class BluetoothUtil implements BluetoothUtilIF {
 
     private BluetoothAdapter bluetoothAdapter;
@@ -53,7 +58,7 @@ public class BluetoothUtil implements BluetoothUtilIF {
         }
         String[] names = new String[devices.length];
 
-        // There are paired devices. Get the name and address of each paired device.
+        // There are paired devices. Get the name of each paired device.
         for (int i = 0; i < devices.length; i++) {
             names[i] = devices[i].getName();
         }

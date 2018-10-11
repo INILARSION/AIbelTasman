@@ -5,6 +5,10 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.net.Uri;
 
+/**
+ * This class is responsible for playing and pausing sounds.
+ */
+
 public class SoundUtil implements SoundUtilIF {
 
     private SoundPool engine;

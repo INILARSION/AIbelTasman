@@ -9,6 +9,11 @@ import android.view.TextureView;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * This class is responsible for opening cameras and for getting/setting its parameters.
+ * It should also give the camera-preview-frames and its pixels.
+ */
+
 public class CameraUtil implements CameraUtilIF {
 
     private TextureView textureView;
