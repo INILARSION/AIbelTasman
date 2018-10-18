@@ -2,9 +2,14 @@ package com.aibeltasman.lk.aibeltasman;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    private BluetoothUtil bluetoothUtil;
+    private MoveControl moveControl;
 
     /**
      * Invoked on activity creation
@@ -19,7 +24,10 @@ public class MainActivity extends AppCompatActivity {
 
         // set the user interface layout for this activity
         // the layout file is defined in the project res/layout/main_activity.xml file
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_start);
+
+        bluetoothUtil = new BluetoothUtil(this);
+        moveControl = new MoveControl();
 
     }
 
@@ -32,6 +40,32 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        Button btnManualCtrl = findViewById(R.id.btnManualCtrl);
+        Button btnDriveSquare = findViewById(R.id.btnDriveSqr);
+        Button btnFindGreen = findViewById(R.id.btnFindGreen);
+
+        btnManualCtrl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setContentView(R.layout.activity_manual_control);
+            }
+        });
+
+        btnDriveSquare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setContentView(R.layout.activity_camera);
+            }
+        });
+
+        btnFindGreen
+                .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setContentView(R.layout.activity_camera);
+            }
+        });
 
     }
 
@@ -81,6 +115,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+
+    protected void setupManualCtrl(){
+
+    }
+
+
+    protected void setupDriveSquare(){
+
+    }
+
+
+    protected void setupFindGreen(){
+
     }
 
 
