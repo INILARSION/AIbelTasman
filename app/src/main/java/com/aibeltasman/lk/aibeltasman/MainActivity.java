@@ -1,7 +1,9 @@
 package com.aibeltasman.lk.aibeltasman;
 
+import android.bluetooth.BluetoothDevice;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
@@ -27,7 +29,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
 
         bluetoothUtil = new BluetoothUtil(this);
-        moveControl = new MoveControl();
+        connectBluetoothToNxt();
+
+        moveControl = new MoveControl(bluetoothUtil);
 
     }
 
@@ -36,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Invoked when the activity enters the Started state -> after Created or Stop state
      * Initialize code for maintaining the UI
+     *
+     * The buttons for choosing the drive mode are set here
      */
     @Override
     protected void onStart() {
@@ -118,7 +124,116 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+    /**
+     * This method connects to bluetooth device with name: "NXT-Test"
+     * Value is HARDCODED for now!
+     * The device HAS to be paired with the device
+     */
+    void connectBluetoothToNxt(){
+        String[] btnames = bluetoothUtil.getPairedDevicesNames();
+        BluetoothDevice btDevice = null;
+        for(int i = 0; i< btnames.length; i++){
+            if(btnames[i].equals("NXT-Test")){
+                btDevice = bluetoothUtil.getPairedDevices()[i];
+            }
+        }
+
+
+        bluetoothUtil.connectToDevice(btDevice);
+    }
+
+
+    /**
+     * This method sets up the buttons for manual control
+     * It uses the MoveControl class for sending the commands
+     */
     protected void setupManualCtrl(){
+        Button forward = findViewById(R.id.btnForward);
+        Button left = findViewById(R.id.btnLeft);
+        Button right = findViewById(R.id.btnRight);
+        Button turnLeft = findViewById(R.id.btnTurnLeft);
+        Button turnRight = findViewById(R.id.btnTurnRight);
+
+        forward.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction()== MotionEvent.ACTION_DOWN) {
+                        moveControl.driveForward();
+                    return true;
+
+                }
+                else if(event.getAction()== MotionEvent.ACTION_UP){
+                        moveControl.stop();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        left.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction()== MotionEvent.ACTION_DOWN) {
+                    moveControl.driveLeft();
+                    return true;
+
+                }
+                else if(event.getAction()== MotionEvent.ACTION_UP){
+                    moveControl.stop();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        right.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction()== MotionEvent.ACTION_DOWN) {
+                    moveControl.driveRight();
+                    return true;
+
+                }
+                else if(event.getAction()== MotionEvent.ACTION_UP){
+                    moveControl.stop();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        turnLeft.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction()== MotionEvent.ACTION_DOWN) {
+                    moveControl.turnLeft();
+                    return true;
+
+                }
+                else if(event.getAction()== MotionEvent.ACTION_UP){
+                    moveControl.stop();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        turnRight.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction()== MotionEvent.ACTION_DOWN) {
+                    moveControl.turnRight();
+                    return true;
+
+                }
+                else if(event.getAction()== MotionEvent.ACTION_UP){
+                    moveControl.stop();
+                    return true;
+                }
+                return false;
+            }
+        });
 
     }
 
