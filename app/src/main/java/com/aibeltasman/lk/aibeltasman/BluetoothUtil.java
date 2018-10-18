@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,6 +24,7 @@ public class BluetoothUtil implements BluetoothUtilIF, SendRcvIF {
     private BluetoothSocket socket;
     private OutputStream outputStream;
     private InputStream inputStream;
+
     private static final int REQUEST_ENABLE_BT = 200;
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
@@ -75,6 +77,7 @@ public class BluetoothUtil implements BluetoothUtilIF, SendRcvIF {
             this.inputStream = socket.getInputStream();
         } catch (IOException e) {
             e.printStackTrace();
+            Log.e("BluetoothUtil.connect",e.getMessage());
         }
     }
 
@@ -85,6 +88,7 @@ public class BluetoothUtil implements BluetoothUtilIF, SendRcvIF {
             outputStream.write(buffer);
         } catch (IOException e) {
             e.printStackTrace();
+            Log.e("BluetoothUtil.sendData",e.getMessage());
         }
     }
 
@@ -96,6 +100,7 @@ public class BluetoothUtil implements BluetoothUtilIF, SendRcvIF {
             inputStream.read(buffer, 0, lenght);
         } catch (IOException e) {
             e.printStackTrace();
+            Log.e("BluetoothUtil.getData",e.getMessage());
         }
         return buffer;
     }
@@ -109,6 +114,7 @@ public class BluetoothUtil implements BluetoothUtilIF, SendRcvIF {
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
+            Log.e("BluetoothUtil.disconct",e.getMessage());
         }
     }
 

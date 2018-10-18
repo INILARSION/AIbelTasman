@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
+import android.util.Log;
 import android.view.TextureView;
 
 import java.io.IOException;
@@ -38,12 +39,15 @@ public class CameraUtil implements CameraUtilIF {
                     camera.startPreview();
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Log.e("camera.previewTex",e.getMessage());
                 }
             }
 
+
             @Override
             public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-
+                // TextureView will never be resized after initialization.
+                // This method will never be called.
             }
 
             @Override
@@ -54,7 +58,7 @@ public class CameraUtil implements CameraUtilIF {
 
             @Override
             public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-
+                // Has to be implemented but will never be used
             }
         };
 

@@ -60,14 +60,14 @@ public class MainActivity extends AppCompatActivity {
         btnManualCtrl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setContentView(R.layout.activity_manual_control);
+                setupManualCtrl();
             }
         });
 
         btnDriveSquare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setContentView(R.layout.activity_camera);
+                setupDriveSquare();
             }
         });
 
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setContentView(R.layout.activity_camera);
+                setupFindGreen();
             }
         });
 
@@ -154,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
      * It uses the MoveControl class for sending the commands
      */
     protected void setupManualCtrl(){
+        setContentView(R.layout.activity_manual_control);
         Button forward = findViewById(R.id.btnForward);
         Button left = findViewById(R.id.btnLeft);
         Button right = findViewById(R.id.btnRight);
@@ -243,13 +244,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * This method sets up anything for the drive a square mode
+     */
     protected void setupDriveSquare(){
-
+        setContentView(R.layout.activity_camera);
     }
 
 
+    /**
+     * This method sets up anything for the drive a square mode
+     */
     protected void setupFindGreen(){
-
+        setContentView(R.layout.activity_camera);
     }
 
 
