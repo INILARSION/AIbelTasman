@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -29,7 +30,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
 
         bluetoothUtil = new BluetoothUtil(this);
-        connectBluetoothToNxt();
+        try {
+            connectBluetoothToNxt();
+        }catch (Exception e){
+            Toast.makeText(this, "Could not connect to NXT!", Toast.LENGTH_LONG);
+        }
+
 
         moveControl = new MoveControl(bluetoothUtil);
 
@@ -138,7 +144,6 @@ public class MainActivity extends AppCompatActivity {
                 btDevice = bluetoothUtil.getPairedDevices()[i];
             }
         }
-
 
         bluetoothUtil.connectToDevice(btDevice);
     }
