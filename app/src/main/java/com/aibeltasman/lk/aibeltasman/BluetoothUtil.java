@@ -16,7 +16,7 @@ import java.util.UUID;
  * and for sending and receiving byte-streams.
  */
 
-public class BluetoothUtil implements BluetoothUtilIF {
+public class BluetoothUtil implements BluetoothUtilIF, SendRcvIF {
 
     private BluetoothAdapter bluetoothAdapter;
     private BluetoothDevice[] devices;

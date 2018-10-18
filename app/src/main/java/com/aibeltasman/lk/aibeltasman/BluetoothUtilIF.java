@@ -10,10 +10,6 @@ public interface BluetoothUtilIF {
 
     void connectToDevice(BluetoothDevice device);
 
-    void sendData(byte[] buffer);
-
-    byte[] getData(int lenght);
-
     void disconnect();
 
 }
