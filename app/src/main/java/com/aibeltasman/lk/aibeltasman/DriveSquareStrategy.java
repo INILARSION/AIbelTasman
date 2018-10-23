@@ -6,4 +6,40 @@ package com.aibeltasman.lk.aibeltasman;
  */
 
 public class DriveSquareStrategy implements MovementStrategyIF {
+
+    private MoveControl mc;
+
+    public DriveSquareStrategy(MoveControl mc){
+        this.mc = mc;
+    }
+
+    public void move(){
+        try {
+            mc.driveForward();
+            Thread.sleep(4000);
+            mc.stop();
+            mc.turnRight();
+            Thread.sleep(550);
+            mc.stop();
+            mc.driveForward();
+            Thread.sleep(2000);
+            mc.stop();
+            mc.turnRight();
+            Thread.sleep(550);
+            mc.stop();
+            mc.driveForward();
+            Thread.sleep(4000);
+            mc.stop();
+            mc.turnRight();
+            Thread.sleep(550);
+            mc.stop();
+            mc.driveForward();
+            Thread.sleep(2000);
+            mc.stop();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
