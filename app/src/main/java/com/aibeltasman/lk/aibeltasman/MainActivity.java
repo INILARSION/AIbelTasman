@@ -12,6 +12,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     private BluetoothUtil bluetoothUtil;
+    private SoundUtil sound;
     private MoveControl moveControl;
     private MovementStrategyIF movementStrategy;
 
@@ -37,8 +38,9 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Could not connect to NXT!", Toast.LENGTH_LONG).show();
         }
 
+        sound = new SoundUtil(this);
 
-        moveControl = new MoveControl(bluetoothUtil);
+        moveControl = new MoveControl(bluetoothUtil, sound);
 
     }
 
