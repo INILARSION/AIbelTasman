@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             connectBluetoothToNxt();
         }catch (Exception e){
-            Toast.makeText(this, "Could not connect to NXT!", Toast.LENGTH_LONG);
+            Toast.makeText(this, "Could not connect to NXT!", Toast.LENGTH_LONG).show();
         }
 
 

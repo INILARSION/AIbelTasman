@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,6 +25,7 @@ public class BluetoothUtil implements BluetoothUtilIF, SendRcvIF {
     private BluetoothSocket socket;
     private OutputStream outputStream;
     private InputStream inputStream;
+    private MainActivity activity;
 
     private static final int REQUEST_ENABLE_BT = 200;
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
@@ -31,6 +33,7 @@ public class BluetoothUtil implements BluetoothUtilIF, SendRcvIF {
 
     public BluetoothUtil(MainActivity activity) {
         this.bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        this.activity = activity;
 
         // Turn BluetoothUtil on
         if (!bluetoothAdapter.isEnabled()) {
@@ -88,7 +91,11 @@ public class BluetoothUtil implements BluetoothUtilIF, SendRcvIF {
             outputStream.write(buffer);
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e("BluetoothUtil.sendData",e.getMessage());
+            Log.e("BT.sendData IO",e.getMessage());
+        } catch (NullPointerException e){
+            e.printStackTrace();
+            Log.e("BT.sendData Null",e.getMessage());
+            Toast.makeText(activity, "Could not send: Null BT device", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -100,7 +107,11 @@ public class BluetoothUtil implements BluetoothUtilIF, SendRcvIF {
             inputStream.read(buffer, 0, lenght);
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e("BluetoothUtil.getData",e.getMessage());
+            Log.e("BT.getData IO",e.getMessage());
+        }catch (NullPointerException e) {
+            e.printStackTrace();
+            Log.e("BT.getData Null",e.getMessage());
+            Toast.makeText(activity, "Could not receive: Null BT device", Toast.LENGTH_SHORT).show();
         }
         return buffer;
     }
@@ -114,7 +125,7 @@ public class BluetoothUtil implements BluetoothUtilIF, SendRcvIF {
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e("BluetoothUtil.disconct",e.getMessage());
+            Log.e("BT.disconct",e.getMessage());
         }
     }
 
