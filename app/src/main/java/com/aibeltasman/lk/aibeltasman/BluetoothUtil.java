@@ -76,11 +76,13 @@ public class BluetoothUtil implements BluetoothUtilIF, SendRcvIF {
     public void connectToDevice(BluetoothDevice device) {
         try {
             this.socket = device.createRfcommSocketToServiceRecord(MY_UUID);
+            this.socket.connect();
             this.outputStream = socket.getOutputStream();
             this.inputStream = socket.getInputStream();
         } catch (IOException e) {
             e.printStackTrace();
             Log.e("BluetoothUtil.connect",e.getMessage());
+            Toast.makeText(activity, "Could not connect: Null BT device", Toast.LENGTH_SHORT).show();
         }
     }
 

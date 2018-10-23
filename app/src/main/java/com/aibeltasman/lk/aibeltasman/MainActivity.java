@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     private BluetoothUtil bluetoothUtil;
     private MoveControl moveControl;
+    private MovementStrategyIF movementStrategy;
 
     /**
      * Invoked on activity creation
@@ -248,7 +249,9 @@ public class MainActivity extends AppCompatActivity {
      * This method sets up anything for the drive a square mode
      */
     protected void setupDriveSquare(){
-        setContentView(R.layout.activity_camera);
+        //setContentView(R.layout.activity_camera);
+        movementStrategy = new DriveSquareStrategy(moveControl);
+        movementStrategy.move();
     }
 
 
