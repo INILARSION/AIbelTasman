@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothDevice;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -262,6 +263,15 @@ public class MainActivity extends AppCompatActivity {
      */
     protected void setupFindGreen(){
         setContentView(R.layout.activity_camera);
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        CameraUtil camera = new CameraUtil(1,90, (TextureView) findViewById(R.id.textureView));
+        ImageRecognition ir = new ImageRecognition(camera);
+        PathFinding pf = new PathFinding(moveControl, ir);
+        pf.drive();
     }
 
 

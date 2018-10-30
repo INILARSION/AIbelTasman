@@ -2,12 +2,12 @@ package com.aibeltasman.lk.aibeltasman;
 
 public class PathFinding implements PathFindingIF{
 
-    private ImageRecognitionIF ir;          // TODO replace with image recognition
+    private ImageRecognition ir;
     private MoveControl mc;
     private boolean targetFound;
     final private int frameTime = 100;      // in millis
 
-    public PathFinding(MoveControl mc, ImageRecognitionIF ir) {
+    public PathFinding(MoveControl mc, ImageRecognition ir) {
         this.mc = mc;
         this.ir = ir;
         this.targetFound = false;
