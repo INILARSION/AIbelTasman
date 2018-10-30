@@ -252,7 +252,6 @@ public class MainActivity extends AppCompatActivity {
      * This method sets up anything for the drive a square mode
      */
     protected void setupDriveSquare(){
-        //setContentView(R.layout.activity_camera);
         movementStrategy = new DriveSquareStrategy(moveControl);
         movementStrategy.move();
     }
@@ -263,12 +262,9 @@ public class MainActivity extends AppCompatActivity {
      */
     protected void setupFindGreen(){
         setContentView(R.layout.activity_camera);
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        CameraUtil camera = new CameraUtil(1,90, (TextureView) findViewById(R.id.textureView));
+
+        CameraUtil camera = new CameraUtil(0,90, (TextureView) findViewById(R.id.textureView));
+        camera.setPreviewSize(176,144);
         ImageRecognition ir = new ImageRecognition(camera);
         PathFinding pf = new PathFinding(moveControl, ir);
         pf.drive();
