@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private SoundUtil sound;
     private MoveControl moveControl;
     private MovementStrategyIF movementStrategy;
+    private boolean stop = false;
 
     /**
      * Invoked on activity creation
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         moveControl = new MoveControl(bluetoothUtil, sound);
 
+        stop = false;
     }
 
 
@@ -97,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        stop = false;
     }
 
 
@@ -108,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        stop = true;
     }
 
 
@@ -263,11 +268,34 @@ public class MainActivity extends AppCompatActivity {
     protected void setupFindGreen(){
         setContentView(R.layout.activity_camera);
 
-        CameraUtil camera = new CameraUtil(0,90, (TextureView) findViewById(R.id.textureView));
+        final CameraUtil camera = new CameraUtil(0,90, (TextureView) findViewById(R.id.textureView));
         camera.setPreviewSize(176,144);
-        ImageRecognition ir = new ImageRecognition(camera);
-        PathFinding pf = new PathFinding(moveControl, ir);
-        pf.drive();
+
+
+        Button getRGB = findViewById(R.id.BTRGB);
+
+
+
+
+        getRGB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView rgb = findViewById(R.id.RGB);
+                int r=0,g=0,b=0;
+                r = camera.getRedPixel(88,72);
+                g = camera.getGreenPixel(88,72);
+                b = camera.getBluePixel(88,72);
+                rgb.setText("r: "+r+" g: "+g+" b: "+b);
+            }
+        });
+
+
+
+        
+
+        //ImageRecognition ir = new ImageRecognition(camera);
+        //PathFinding pf = new PathFinding(moveControl, ir);
+        //pf.drive();
     }
 
 

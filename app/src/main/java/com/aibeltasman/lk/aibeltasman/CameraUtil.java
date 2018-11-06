@@ -133,28 +133,56 @@ public class CameraUtil implements CameraUtilIF {
 
     @Override
     public int getPixel(int x, int y) {
-        return textureView.getBitmap().getPixel(x, y);
+        try{
+            return textureView.getBitmap().getPixel(x, y);
+        }
+        catch (NullPointerException e){
+            e.printStackTrace();
+            Log.e("Cam.Pixel", e.getMessage());
+            return -1;
+        }
     }
 
 
     // returns values in range (0 ,255)
     @Override
     public int getRedPixel(int x, int y) {
-        return Color.red(textureView.getBitmap().getPixel(x, y));
+        try {
+            return Color.red(textureView.getBitmap().getPixel(x, y));
+        }
+        catch (NullPointerException e){
+            e.printStackTrace();
+            Log.e("Cam.Red", e.getMessage());
+            return -1;
+        }
     }
 
 
     // returns values in range (0 ,255)
     @Override
     public int getGreenPixel(int x, int y) {
+        try{
         return Color.green(textureView.getBitmap().getPixel(x, y));
+        }
+        catch (NullPointerException e){
+            e.printStackTrace();
+            Log.e("Cam.GReen", e.getMessage());
+            return -1;
+        }
     }
 
 
     // returns values in range (0 ,255)
     @Override
     public int getBluePixel(int x, int y) {
+        try {
         return Color.blue(textureView.getBitmap().getPixel(x, y));
+        }
+        catch (NullPointerException e){
+            e.printStackTrace();
+            Log.e("Cam.Blue", e.getMessage());
+            return -1;
+        }
     }
 
 
