@@ -8,13 +8,13 @@ public class ImageRecognition implements ImageRecognitionIF {
 
     Red Tape:   R: 145 G: 36  B: 42
                 R: 129 G: 40  B: 46
-                R: 136  G: 13  B: 27
+                R: 136 G: 13  B: 27
                 R: 135 G: 21  B: 35
 
-    Green Spot: R:  G:  B:
-                R:  G:  B:
-                R:  G:  B:
-                R:  G:  B:
+    Green Spot: R: 116 G: 163 B: 124
+                R: 118 G: 165 B: 126
+                R: 177 G: 217 B: 191
+                R: 177 G: 217 B: 191
 
     Table:      R: 157 G: 154  B: 146
                 R: 160 G: 157  B: 149
