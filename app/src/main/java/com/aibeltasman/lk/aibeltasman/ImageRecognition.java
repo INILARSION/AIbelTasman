@@ -43,8 +43,24 @@ public class ImageRecognition implements ImageRecognitionIF {
     @Override
     public boolean isClear() {
         Bitmap bitmap = camera.getPreviewBitmap();
-        int centerFloorPixel = bitmap.getPixel(bitmapWidth / 2, bitmapHeight / 8 * 7);
-        return !isRed(centerFloorPixel);
+        int pixel = 0;
+
+        // toleranz soll false positives abfangen -> falls nicht rote Pixels als Rot erkannt werden
+        int toleranz = 5;
+
+        for (int i = 0; i < bitmapWidth; i++) {
+            pixel = bitmap.getPixel(i, bitmapHeight / 10 * 9);
+
+            if(isRed(pixel) || isGreen(pixel)){
+                --toleranz;
+            }
+
+            if(toleranz < 0){
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override
