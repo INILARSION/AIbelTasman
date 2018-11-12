@@ -1,5 +1,8 @@
 package com.aibeltasman.lk.aibeltasman;
 
+import android.graphics.Bitmap;
+import android.graphics.Color;
+
 public class ImageRecognition implements ImageRecognitionIF {
 
     /* --- COLOR VALUES ---
@@ -28,14 +31,20 @@ public class ImageRecognition implements ImageRecognitionIF {
      */
 
     private CameraUtil camera;
+    private int bitmapWidth;
+    private int bitmapHeight;
 
     public ImageRecognition(CameraUtil camera){
         this.camera = camera;
+        bitmapWidth = camera.getBitmapWidth();
+        bitmapHeight = camera.getBitmapHeight();
     }
 
     @Override
     public boolean isClear() {
-        return true;
+        Bitmap bitmap = camera.getPreviewBitmap();
+        int centerFloorPixel = bitmap.getPixel(bitmapWidth / 2, bitmapHeight / 8 * 7);
+        return !isRed(centerFloorPixel);
     }
 
     @Override
@@ -51,5 +60,21 @@ public class ImageRecognition implements ImageRecognitionIF {
     @Override
     public boolean targetFound() {
         return false;
+    }
+
+
+    private boolean isRed(int pixel){
+        int red = Color.red(pixel);
+        return (red > 100 && red + Color.green(pixel) + Color.blue(pixel) / 3 < red - 20);
+    }
+
+    private boolean isGreen(int pixel){
+        int green = Color.green(pixel);
+        return (green > 120 && Color.red(pixel) + green + Color.blue(pixel) / 3 < green - 15);
+    }
+
+    private boolean isBlue(int pixel){
+        int blue = Color.blue(pixel);
+        return (blue > 120 && Color.red(pixel) + Color.green(pixel) + blue / 3 < blue - 10);
     }
 }
