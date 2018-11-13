@@ -76,11 +76,53 @@ public class ImageRecognition implements ImageRecognitionIF {
 
     @Override
     public boolean isRightTurn() {
+        Bitmap bitmap = camera.getPreviewBitmap();
+        int pixel;
+
+        // toleranz soll false positives abfangen -> falls nicht rote Pixels als Rot erkannt werden
+        int toleranz = 5;
+
+        for (int i = 0; i < 58; i++) {
+            for (int j = 20; j < bitmapHeight; j++) {
+                pixel = bitmap.getPixel(i, j);
+
+                if(isRed(pixel)){
+                    --toleranz;
+                }
+
+                if(toleranz < 0){
+                    return true;
+                }
+            }
+
+        }
+
         return false;
     }
 
     @Override
     public boolean isLeftTurn() {
+        Bitmap bitmap = camera.getPreviewBitmap();
+        int pixel;
+
+        // toleranz soll false positives abfangen -> falls nicht rote Pixels als Rot erkannt werden
+        int toleranz = 5;
+
+        for (int i = 118; i < 177; i++) {
+            for (int j = 20; j < bitmapHeight; j++) {
+                pixel = bitmap.getPixel(i, j);
+
+                if(isRed(pixel)){
+                    --toleranz;
+                }
+
+                if(toleranz < 0){
+                    return true;
+                }
+            }
+
+        }
+
         return false;
     }
 
