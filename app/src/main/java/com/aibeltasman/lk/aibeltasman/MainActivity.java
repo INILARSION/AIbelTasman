@@ -286,16 +286,20 @@ public class MainActivity extends AppCompatActivity {
                 g = camera.getGreenPixel(88,72);
                 b = camera.getBluePixel(88,72);
                 rgb.setText("r: "+r+" g: "+g+" b: "+b);
+
+
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ImageRecognition ir = new ImageRecognition(camera);
+                        PathFinding pf = new PathFinding(moveControl, ir);
+                        pf.drive();
+                    }
+                });
+                thread.start();
             }
         });
 
-
-
-        
-
-        //ImageRecognition ir = new ImageRecognition(camera);
-        //PathFinding pf = new PathFinding(moveControl, ir);
-        //pf.drive();
     }
 
 

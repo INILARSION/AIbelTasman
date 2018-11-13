@@ -19,6 +19,7 @@ public class CameraUtil implements CameraUtilIF {
 
     private TextureView textureView;
     private Camera camera;
+    private boolean cameraReady = false;
 
 
     CameraUtil(int cameraID, int displayOrientationDeg, TextureView textureView){
@@ -37,6 +38,7 @@ public class CameraUtil implements CameraUtilIF {
                     camera.setDisplayOrientation(90);
                     camera.setPreviewTexture(surface);
                     camera.startPreview();
+                    cameraReady = true;
                 } catch (IOException e) {
                     e.printStackTrace();
                     Log.e("camera.previewTex",e.getMessage());
@@ -183,6 +185,11 @@ public class CameraUtil implements CameraUtilIF {
             Log.e("Cam.Blue", e.getMessage());
             return -1;
         }
+    }
+
+
+    public boolean isReady(){
+        return cameraReady;
     }
 
 

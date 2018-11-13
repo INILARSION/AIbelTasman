@@ -5,7 +5,7 @@ public class PathFinding implements PathFindingIF{
     private ImageRecognition ir;
     private MoveControl mc;
     private boolean targetFound;
-    final private int frameTime = 100;      // in millis
+    final private int frameTime = 50;      // in millis
 
     public PathFinding(MoveControl mc, ImageRecognition ir) {
         this.mc = mc;

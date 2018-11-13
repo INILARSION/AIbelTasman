@@ -49,15 +49,18 @@ public class ImageRecognition implements ImageRecognitionIF {
         int toleranz = 5;
 
         for (int i = 0; i < bitmapWidth; i++) {
-            pixel = bitmap.getPixel(i, bitmapHeight / 10 * 9);
+            for (int j = 0; j < 70; j++) {
+                pixel = bitmap.getPixel(i, (bitmapHeight / 10 * 5)+j);
 
-            if(isRed(pixel) || isGreen(pixel)){
-                --toleranz;
+                if(isRed(pixel) || isGreen(pixel)){
+                    --toleranz;
+                }
+
+                if(toleranz < 0){
+                    return false;
+                }
             }
 
-            if(toleranz < 0){
-                return false;
-            }
         }
 
         return true;
@@ -75,22 +78,40 @@ public class ImageRecognition implements ImageRecognitionIF {
 
     @Override
     public boolean targetFound() {
+        Bitmap bitmap = camera.getPreviewBitmap();
+        int pixel = 0;
+
+        // toleranz soll false positives abfangen -> falls nicht grüne Pixels als Rot erkannt werden
+        int toleranz = 5;
+
+        for (int i = 0; i < bitmapWidth; i++) {
+            pixel = bitmap.getPixel(i, bitmapHeight / 10 * 9);
+
+            if(isGreen(pixel)){
+                --toleranz;
+            }
+
+            if(toleranz < 0){
+                return true;
+            }
+        }
+
         return false;
     }
 
 
     private boolean isRed(int pixel){
         int red = Color.red(pixel);
-        return (red > 100 && red + Color.green(pixel) + Color.blue(pixel) / 3 < red - 20);
+        return (red > 100 && (((red + Color.green(pixel) + Color.blue(pixel)) / 3 )< red - 20));
     }
 
     private boolean isGreen(int pixel){
         int green = Color.green(pixel);
-        return (green > 120 && Color.red(pixel) + green + Color.blue(pixel) / 3 < green - 15);
+        return (green > 100 && (((Color.red(pixel) + green + Color.blue(pixel)) / 3 )< green - 15));
     }
 
     private boolean isBlue(int pixel){
         int blue = Color.blue(pixel);
-        return (blue > 120 && Color.red(pixel) + Color.green(pixel) + blue / 3 < blue - 10);
+        return (blue > 100 && (((Color.red(pixel) + Color.green(pixel)+ blue) / 3 )< blue - 10));
     }
 }
