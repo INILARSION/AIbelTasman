@@ -1,6 +1,11 @@
 package com.aibeltasman.lk.aibeltasman;
 
+import android.Manifest;
 import android.bluetooth.BluetoothDevice;
+import android.content.pm.PackageManager;
+import android.os.Looper;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -17,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private SoundUtil sound;
     private MoveControl moveControl;
     private MovementStrategyIF movementStrategy;
+    private Thread timeThread;
     private boolean stop = false;
 
     /**
@@ -39,6 +45,11 @@ public class MainActivity extends AppCompatActivity {
             connectBluetoothToNxt();
         }catch (Exception e){
             Toast.makeText(this, "Could not connect to NXT!", Toast.LENGTH_LONG).show();
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_DENIED){
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, 100);
         }
 
         sound = new SoundUtil(this);
@@ -271,10 +282,8 @@ public class MainActivity extends AppCompatActivity {
         final CameraUtil camera = new CameraUtil(0,90, (TextureView) findViewById(R.id.textureView));
         camera.setPreviewSize(176,144);
 
-
         Button getRGB = findViewById(R.id.BTRGB);
-
-
+        Button btnStopRobot = findViewById(R.id.btnStopRobot);
 
 
         getRGB.setOnClickListener(new View.OnClickListener() {
@@ -286,19 +295,54 @@ public class MainActivity extends AppCompatActivity {
                 g = camera.getGreenPixel(88,72);
                 b = camera.getBluePixel(88,72);
                 rgb.setText("r: "+r+" g: "+g+" b: "+b);
-
-
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ImageRecognition ir = new ImageRecognition(camera);
-                        PathFinding pf = new PathFinding(moveControl, ir);
-                        pf.drive();
-                    }
-                });
-                thread.start();
             }
         });
+
+
+        final Thread pathfindingThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                ImageRecognition ir = new ImageRecognition(camera);
+                PathFinding pf = new PathFinding(moveControl, ir, sound);
+                pf.drive();
+                timeThread.interrupt();
+            }
+        });
+
+
+        btnStopRobot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pathfindingThread.interrupt();
+                moveControl.stop();
+            }
+        });
+
+        pathfindingThread.start();
+
+
+        timeThread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                long startTime = System.currentTimeMillis();
+                long now = System.currentTimeMillis();
+                while (now - startTime < 600000){
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    now = System.currentTimeMillis();
+                }
+                pathfindingThread.interrupt();
+                moveControl.stop();
+                sound.playFailSound();
+            }
+        });
+
+        timeThread.start();
 
     }
 

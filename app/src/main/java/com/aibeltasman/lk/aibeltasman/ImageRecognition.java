@@ -35,6 +35,14 @@ public class ImageRecognition implements ImageRecognitionIF {
     private int bitmapHeight;
 
     public ImageRecognition(CameraUtil camera){
+        while (!camera.isReady()){
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
         this.camera = camera;
         bitmapWidth = camera.getBitmapWidth();
         bitmapHeight = camera.getBitmapHeight();
@@ -43,7 +51,7 @@ public class ImageRecognition implements ImageRecognitionIF {
     @Override
     public boolean isClear() {
         Bitmap bitmap = camera.getPreviewBitmap();
-        int pixel = 0;
+        int pixel;
 
         // toleranz soll false positives abfangen -> falls nicht rote Pixels als Rot erkannt werden
         int toleranz = 5;

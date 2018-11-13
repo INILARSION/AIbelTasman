@@ -4,12 +4,14 @@ public class PathFinding implements PathFindingIF{
 
     private ImageRecognition ir;
     private MoveControl mc;
+    private SoundUtil sound;
     private boolean targetFound;
-    final private int frameTime = 50;      // in millis
+    private final int frameTime = 50;      // in millis
 
-    public PathFinding(MoveControl mc, ImageRecognition ir) {
+    public PathFinding(MoveControl mc, ImageRecognition ir, SoundUtil sound) {
         this.mc = mc;
         this.ir = ir;
+        this.sound = sound;
         this.targetFound = false;
     }
 
@@ -18,6 +20,8 @@ public class PathFinding implements PathFindingIF{
         while (!this.targetFound) {
             this.driveForward();
         }
+        mc.stop();
+        sound.playCelebrateSound();
     }
 
     @Override
