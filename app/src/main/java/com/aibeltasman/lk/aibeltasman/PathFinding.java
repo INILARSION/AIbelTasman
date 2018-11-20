@@ -7,6 +7,7 @@ public class PathFinding implements PathFindingIF{
     private SoundUtil sound;
     private boolean targetFound;
     private final int frameTime = 50;      // in millis
+    private final int maxRandomTime = 1000;
 
     public PathFinding(MoveControl mc, ImageRecognition ir, SoundUtil sound) {
         this.mc = mc;
@@ -87,7 +88,12 @@ public class PathFinding implements PathFindingIF{
 
         try {
             while (!wayIsClear) {
-                Thread.sleep(this.frameTime);
+                if (this.ir.targetFound()) {
+                    this.targetFound = true;
+                    mc.stop();
+                    break;
+                }
+                Thread.sleep(this.frameTime + (int)(Math.random() * maxRandomTime));
                 wayIsClear = this.ir.isClear();
             }
         } catch (InterruptedException e) {
@@ -104,7 +110,12 @@ public class PathFinding implements PathFindingIF{
 
         try {
             while (!wayIsClear) {
-                Thread.sleep(this.frameTime);
+                if (this.ir.targetFound()) {
+                    this.targetFound = true;
+                    mc.stop();
+                    break;
+                }
+                Thread.sleep(this.frameTime + (int)(Math.random() * maxRandomTime));
                 wayIsClear = this.ir.isClear();
             }
         } catch (InterruptedException e) {
