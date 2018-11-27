@@ -314,7 +314,8 @@ public class MainActivity extends AppCompatActivity {
         btnStopRobot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pathfindingThread.interrupt();
+                //pathfindingThread.interrupt();
+                PathFinding.setTargetFound();
                 moveControl.stop();
             }
         });
@@ -336,8 +337,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                     now = System.currentTimeMillis();
                 }
-                pathfindingThread.interrupt();
-                moveControl.stop();
+                //pathfindingThread.interrupt();
+                //moveControl.stop();
+                PathFinding.setTargetFound();
                 sound.playFailSound();
             }
         });
