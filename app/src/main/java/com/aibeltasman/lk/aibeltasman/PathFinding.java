@@ -7,7 +7,7 @@ public class PathFinding implements PathFindingIF{
     private SoundUtil sound;
     private boolean targetFound;
     private final int frameTime = 50;      // in millis
-    private final int maxRandomTime = 1000;
+    private final int maxRandomTime = 800;
 
     public PathFinding(MoveControl mc, ImageRecognition ir, SoundUtil sound) {
         this.mc = mc;
@@ -72,7 +72,7 @@ public class PathFinding implements PathFindingIF{
 //                 direction == 0 : turn left
 //                 direction == 1 : turn right
 
-       direction = Math.random();
+       direction = Math.floor(Math.random()+0.5);
 
         if (direction == 0) {
             this.turnLeft();

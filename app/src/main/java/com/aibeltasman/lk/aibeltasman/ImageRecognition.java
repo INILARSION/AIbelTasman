@@ -57,8 +57,8 @@ public class ImageRecognition implements ImageRecognitionIF {
         int toleranz = 5;
 
         for (int i = 0; i < bitmapWidth; i++) {
-            for (int j = 0; j < 70; j++) {
-                pixel = bitmap.getPixel(i, (bitmapHeight / 10 * 5)+j);
+            for (int j = 0; j < 88; j++) {
+                pixel = bitmap.getPixel(i, (bitmapHeight / 10 * 4)+j);
 
                 if(isRed(pixel) || isGreen(pixel)){
                     --toleranz;
@@ -76,6 +76,8 @@ public class ImageRecognition implements ImageRecognitionIF {
 
     @Override
     public boolean isRightTurn() {
+        return false;
+        /*
         Bitmap bitmap = camera.getPreviewBitmap();
         int pixel;
 
@@ -98,10 +100,13 @@ public class ImageRecognition implements ImageRecognitionIF {
         }
 
         return false;
+        */
     }
 
     @Override
     public boolean isLeftTurn() {
+        return false;
+        /*
         Bitmap bitmap = camera.getPreviewBitmap();
         int pixel;
 
@@ -124,6 +129,7 @@ public class ImageRecognition implements ImageRecognitionIF {
         }
 
         return false;
+        */
     }
 
     @Override

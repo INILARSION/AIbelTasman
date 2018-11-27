@@ -14,9 +14,9 @@ public class DriveSquareStrategy implements MovementStrategyIF {
     }
 
     public void move(){
-        int oneMeterMillis = 3000;
-        int halfMeterMillis = 2000;
-        int turnTime = 1000;
+        int oneMeterMillis = 5000;
+        int halfMeterMillis = 3000;
+        int turnTime = 3000;
 
         try {
             mc.driveForward();
