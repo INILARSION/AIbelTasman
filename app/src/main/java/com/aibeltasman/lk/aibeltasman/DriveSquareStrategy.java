@@ -14,11 +14,28 @@ public class DriveSquareStrategy implements MovementStrategyIF {
     }
 
     public void move(){
-        int oneMeterMillis = 5000;
-        int halfMeterMillis = 3000;
-        int turnTime = 3000;
+        int oneMeterMillis = 6500;
+        int halfMeterMillis = 3800;
+        int turnTime = 1342;
 
         try {
+
+            mc.driveForward();
+            Thread.sleep(oneMeterMillis);
+            mc.stop();
+
+            mc.turnRight();
+            Thread.sleep(turnTime);
+            mc.stop();
+
+            mc.driveForward();
+            Thread.sleep(halfMeterMillis);
+            mc.stop();
+
+            mc.turnRight();
+            Thread.sleep(turnTime);
+            mc.stop();
+
             mc.driveForward();
             Thread.sleep(oneMeterMillis);
             mc.stop();
@@ -33,18 +50,6 @@ public class DriveSquareStrategy implements MovementStrategyIF {
 
             mc.turnRight();
             Thread.sleep(turnTime);
-            mc.stop();
-
-            mc.driveForward();
-            Thread.sleep(oneMeterMillis);
-            mc.stop();
-
-            mc.turnRight();
-            Thread.sleep(turnTime);
-            mc.stop();
-
-            mc.driveForward();
-            Thread.sleep(halfMeterMillis);
             mc.stop();
 
         } catch (InterruptedException e) {
