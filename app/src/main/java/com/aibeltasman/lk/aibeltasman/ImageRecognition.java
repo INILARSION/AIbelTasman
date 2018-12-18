@@ -54,11 +54,11 @@ public class ImageRecognition implements ImageRecognitionIF {
         int pixel;
 
         // toleranz soll false positives abfangen -> falls nicht rote Pixels als Rot erkannt werden
-        int toleranz = 5;
+        int toleranz = 100;
 
         for (int i = 0; i < bitmapWidth; i++) {
-            for (int j = 0; j < 88; j++) {
-                pixel = bitmap.getPixel(i, (bitmapHeight / 10 * 4)+j);
+            for (int j = (bitmapHeight / 10 * 2); j < bitmapHeight; j++) {
+                pixel = bitmap.getPixel(i, j);
 
                 if(isRed(pixel) || isGreen(pixel)){
                     --toleranz;
@@ -158,11 +158,11 @@ public class ImageRecognition implements ImageRecognitionIF {
 
         return false;
     }
-
+//r 225, 222, 213, # 182, 185, 179
 
     private boolean isRed(int pixel){
         int red = Color.red(pixel);
-        return (red > 100 && (((red + Color.green(pixel) + Color.blue(pixel)) / 3 )< red - 20));
+        return (red > 100 && (((red + Color.green(pixel) + Color.blue(pixel)) / 3 )< red - 40));
     }
 
     private boolean isGreen(int pixel){

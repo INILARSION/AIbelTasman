@@ -23,7 +23,7 @@ public class MoveControl implements MoveControlIF {
      */
     //                                                       0     1     2     3            4      5     6     7     8     9     10    11    12    13
     // Forward without regulation
-    private static final byte[] FORWARD         = new byte[]{0x0C, 0x00, 0x00, 0x04, (byte) 0xFF,  0x20, 0x05, 0x01, 0x32, 0x20, 0x00, 0x00, 0x00, 0x00};
+    private static final byte[] FORWARD         = new byte[]{0x0C, 0x00, 0x00, 0x04, (byte) 0xFF,  0x40, 0x05, 0x01, 0x32, 0x20, 0x00, 0x00, 0x00, 0x00};
 
     // Versuch die Räder synchronized laufen zu lassen. Klappt leider so noch nicht!
     //private static final byte[] FORWARD2        = new byte[]{0x0C, 0x00, 0x00, 0x04, (byte) 0xFF,  0x40, 0x04, 0x02, 0x40, 0x20, 0x00, 0x00, 0x00, 0x00};
@@ -31,6 +31,7 @@ public class MoveControl implements MoveControlIF {
     private static final byte[] FORWARD3        = new byte[]{0x0C, 0x00, 0x00, 0x04, (byte) 0x01,  0x32, 0x05, 0x02, 0x00, 0x20, 0x00, 0x00, 0x00, 0x00};
     private static final byte[] FORWARD4        = new byte[]{0x0C, 0x00, 0x00, 0x04, (byte) 0x02,  0x32, 0x05, 0x02, 0x00, 0x20, 0x00, 0x00, 0x00, 0x00};
 
+    private static final byte[] BACKWARD         = new byte[]{0x0C, 0x00, 0x00, 0x04, (byte) 0xFF,  -0x20, 0x05, 0x01, 0x32, 0x20, 0x00, 0x00, 0x00, 0x00};
 
     private static final byte[] STOP            = new byte[]{0x0C, 0x00, 0x00, 0x04, (byte) 0xFF,  0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
@@ -81,6 +82,14 @@ public class MoveControl implements MoveControlIF {
         sound.playEngineSound();
     }
 
+
+
+    public void driveBackward() {
+        sendRcv.sendData(BACKWARD);
+        sound.playEngineSound();
+    }
+
+
     @Override
     public void driveLeft() {
         sendRcv.sendData(B_FULL_FORWARD);
@@ -114,5 +123,10 @@ public class MoveControl implements MoveControlIF {
         sendRcv.sendData(STOP);
         sound.stopEngineSound();
         sound.playBrakeSound();
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
