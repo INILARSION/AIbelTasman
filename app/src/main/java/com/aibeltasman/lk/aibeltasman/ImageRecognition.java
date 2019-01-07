@@ -33,6 +33,11 @@ public class ImageRecognition implements ImageRecognitionIF {
     private CameraUtil camera;
     private int bitmapWidth;
     private int bitmapHeight;
+    private int lowestPixel;
+
+    public int getLowestPixel(){
+        return lowestPixel;
+    }
 
     public ImageRecognition(CameraUtil camera){
         while (!camera.isReady()){
@@ -57,10 +62,12 @@ public class ImageRecognition implements ImageRecognitionIF {
         int toleranz = 100;
 
         for (int i = 0; i < bitmapWidth; i++) {
-            for (int j = (bitmapHeight / 10 * 2); j < bitmapHeight; j++) {
+            //for (int j = (bitmapHeight / 10 * 2); j < bitmapHeight; j++) {
+            for (int j = bitmapHeight-1; j >= (bitmapHeight / 10 * 2); j--) {
                 pixel = bitmap.getPixel(i, j);
 
                 if(isRed(pixel) || isGreen(pixel)){
+                    lowestPixel = i;
                     --toleranz;
                 }
 

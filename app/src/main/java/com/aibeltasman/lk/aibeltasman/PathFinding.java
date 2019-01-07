@@ -57,18 +57,25 @@ public class PathFinding implements PathFindingIF{
         if (this.ir.targetFound()) {
             this.targetFound = true;
         } else {
-            if (this.ir.isLeftTurn()) {
+            if (this.ir.getLowestPixel()<88) {
+                this.turnRight();
+            }
+            else {
+                this.turnLeft();
+            }
+            /*if (this.ir.isLeftTurn()) {
                 this.turnLeft();
             } else if (this.ir.isRightTurn()) {
                 this.turnRight();
             } else {
                 this.turnRandomDirection();
-            }
+            }*/
 
             if (this.ir.targetFound()) {
                 this.targetFound = true;
             }
         }
+        driveBackwards();
     }
 
     @Override
@@ -85,6 +92,16 @@ public class PathFinding implements PathFindingIF{
             this.turnRight();
         }
         mc.stop();
+        mc.driveBackward();
+        try {
+            Thread.sleep(700);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        mc.stop();
+    }
+
+    public void driveBackwards(){
         mc.driveBackward();
         try {
             Thread.sleep(700);
