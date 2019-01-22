@@ -6,8 +6,8 @@ public class PathFinding implements PathFindingIF{
     private MoveControl mc;
     private SoundUtil sound;
     private static boolean targetFound;
-    private final int frameTime = 20;      // in millis
-    private final int maxRandomTime = 120;
+    private final int frameTime = 50;      // in millis
+    private final int maxRandomTime = 500;
 
     public PathFinding(MoveControl mc, ImageRecognition ir, SoundUtil sound) {
         this.mc = mc;
